@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "Autoenter Broadway",
+    "version": "1.0",
+    "description": "An easy way to sign up for your favorite NYC Broadway Lotteries on various sites.",
+    "action": {
+      "default_icon": "assets/favicon.png",
+      "default_title": "Broadway Lotteries",
+      "default_popup": "index.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://lottery.broadwaydirect.com/*"],
+        "js": ["broadway.js"],
+        "all_frames": true
+      }
+    ],
+    "permissions": [
+      "activeTab",
+      "tabs" ,
+      "storage"
+    ],
+    "host_permissions": [
+      "*://lottery.broadwaydirect.com/*"
+    ]
+  }
+  
