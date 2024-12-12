@@ -46,8 +46,13 @@ export const BroadwayLottery: React.FC = () => {
     const handleOpenSelected = (): void => {
         LOTTERY_LIST.filter((show) => selectedShows.includes(show.id)).forEach(
             (show) => {
-                //     window.open(show.url, "_blank");
-                console.log(show.name);
+                chrome.tabs.create(
+                    {
+                        url: `${show.url}?bwayExt=true`,
+                        active: false,
+                    },
+                    (tab) => {}
+                );
             }
         );
     };

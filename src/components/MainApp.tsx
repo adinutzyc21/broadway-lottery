@@ -62,9 +62,9 @@ const MainApp: React.FC = () => {
                 </Tooltip>
             </Typography> */}
             <ProfilesContext.Provider value={value}>
+                <BroadwayLottery />
                 <ProfileForm />
                 <SavedProfiles />
-                <BroadwayLottery />
             </ProfilesContext.Provider>
 
             <Snackbar
