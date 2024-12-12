@@ -1,25 +1,17 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState } from "react";
 import {
     Box,
     Typography,
-    Button,
-    TextField,
-    Select,
-    MenuItem,
-    InputLabel,
-    FormControl,
-    Snackbar,
     Alert,
-    List,
-    ListItem,
-    ListItemText,
     IconButton,
     Tooltip,
+    Snackbar,
 } from "@mui/material";
 import { HelpOutline } from "@mui/icons-material";
 import { ProfileForm } from "./ProfileForm";
 import { SavedProfiles } from "./SavedProfiles";
 import { ProfilesContext } from "../utils/ProfilesContext";
+import { BroadwayLottery } from "./BroadwayLottery";
 
 export interface Profile {
     firstName: string;
@@ -72,6 +64,7 @@ const MainApp: React.FC = () => {
             <ProfilesContext.Provider value={value}>
                 <ProfileForm />
                 <SavedProfiles />
+                <BroadwayLottery />
             </ProfilesContext.Provider>
 
             <Snackbar

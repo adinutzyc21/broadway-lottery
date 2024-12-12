@@ -1,0 +1,51 @@
+export const LOTTERY_LIST = [
+    {
+        id: 0,
+        name: "ALADDIN",
+        url: "https://lottery.broadwaydirect.com/show/aladdin/",
+        img: "assets/bway/aladdin.jpg",
+        theater: "UNKNOWN THEATER",
+    },
+    {
+        id: 1,
+        name: "DEATH BECOMES HER",
+        url: "https://lottery.broadwaydirect.com/show/dbh-nyc/",
+        img: "assets/bway/dbh-nyc.jpg",
+        theater: "UNKNOWN THEATER",
+    },
+    {
+        id: 2,
+        name: "ELF THE MUSICAL",
+        url: "https://lottery.broadwaydirect.com/show/elf-ny/",
+        img: "assets/bway/elf-ny.jpg",
+        theater: "UNKNOWN THEATER",
+    },
+    {
+        id: 3,
+        name: "MJ",
+        url: "https://lottery.broadwaydirect.com/show/mj-ny/",
+        img: "assets/bway/mj-ny.jpg",
+        theater: "UNKNOWN THEATER",
+    },
+    {
+        id: 4,
+        name: "SIX",
+        url: "https://lottery.broadwaydirect.com/show/six-ny/",
+        img: "assets/bway/six-ny.jpg",
+        theater: "UNKNOWN THEATER",
+    },
+    {
+        id: 5,
+        name: "THE LION KING ",
+        url: "https://lottery.broadwaydirect.com/show/the-lion-king/",
+        img: "assets/bway/the-lion-king.jpg",
+        theater: "UNKNOWN THEATER",
+    },
+    {
+        id: 6,
+        name: "WICKED",
+        url: "https://lottery.broadwaydirect.com/show/wicked/",
+        img: "assets/bway/wicked.jpg",
+        theater: "GERSHWIN THEATRE",
+    },
+];

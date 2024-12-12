@@ -1,11 +1,9 @@
-import React, {
+import {
     useState,
     useEffect,
     ChangeEvent,
     useContext,
     ReactElement,
-    Dispatch,
-    SetStateAction,
 } from "react";
 import {
     Box,
@@ -16,8 +14,6 @@ import {
     MenuItem,
     InputLabel,
     FormControl,
-    Snackbar,
-    Alert,
 } from "@mui/material";
 import { ProfilesContext, initialProfile } from "../utils/ProfilesContext";
 import { Profile } from "./MainApp";
