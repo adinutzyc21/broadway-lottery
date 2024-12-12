@@ -10,6 +10,7 @@ import { Edit, Delete } from "@mui/icons-material";
 import { useContext, useEffect } from "react";
 import { ProfilesContext } from "../utils/ProfilesContext";
 import { Profile } from "./MainApp";
+import { scrollToId } from "../utils/utils";
 
 export const SavedProfiles: React.FC = () => {
     const { profiles, setProfiles, setNotification, setEditingIndex } =
@@ -28,6 +29,8 @@ export const SavedProfiles: React.FC = () => {
     };
 
     const handleEditProfile = (index: number) => {
+        scrollToId("profileForm");
+
         setEditingIndex(index);
     };
 
@@ -41,9 +44,7 @@ export const SavedProfiles: React.FC = () => {
 
     return (
         <Box sx={{ p: 4 }}>
-            <Typography variant="h5" mt={4} mb={2}>
-                Saved Profiles
-            </Typography>
+            <h1 id="savedProfiles">Saved Profiles</h1>
             <List>
                 {profiles.map((profile: Profile, index: number) => (
                     <ListItem key={index}>

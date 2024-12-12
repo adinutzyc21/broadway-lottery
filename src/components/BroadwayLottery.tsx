@@ -54,7 +54,7 @@ export const BroadwayLottery: React.FC = () => {
 
     return (
         <Container>
-            <h1>Broadway Direct Lotteries</h1>
+            <h1 id="lotteries">Broadway Direct Lotteries</h1>
             <List>
                 {LOTTERY_LIST.map((show) => (
                     <ListItem key={show.id} divider>
