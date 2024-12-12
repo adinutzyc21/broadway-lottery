@@ -12,3 +12,7 @@ Inspired by peterzhen/BroadwayLottery which hasn't been updated in 2 years. Plan
     - `npm run build`
         - this should create a `"build"` folder in the extension folder - this is the extension code that needs to be loaded into Chrome
 3. Load extension into Chrome by going to `chrome://extensions/`, turning developer mode on, and clicking `Load unpacked`. Select the `build` folder. The extension will now be available in the extension toolbar.
+
+## Notes
+
+- `?bwayExt=true` in manifest.json was added because otherwise the extension just ran on broadwayDirect pages so users couldn't just open the site anymore.

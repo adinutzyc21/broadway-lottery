@@ -1,11 +1,9 @@
-import React, {
+import {
     useState,
     useEffect,
     ChangeEvent,
     useContext,
     ReactElement,
-    Dispatch,
-    SetStateAction,
 } from "react";
 import {
     Box,
@@ -16,11 +14,10 @@ import {
     MenuItem,
     InputLabel,
     FormControl,
-    Snackbar,
-    Alert,
 } from "@mui/material";
 import { ProfilesContext, initialProfile } from "../utils/ProfilesContext";
 import { Profile } from "./MainApp";
+import { scrollToId } from "../utils/utils";
 
 export function ProfileForm(): ReactElement {
     const {
@@ -67,6 +64,8 @@ export function ProfileForm(): ReactElement {
 
             // clear the form
             setFormData(initialProfile);
+
+            scrollToId("savedProfiles");
         }
     };
 
@@ -90,9 +89,9 @@ export function ProfileForm(): ReactElement {
 
     return (
         <Box sx={{ p: 4 }}>
-            <Typography variant="h4" gutterBottom>
-                Lottery Profiles
-            </Typography>
+            <h1 id="profileForm">
+                {editingIndex >= 0 ? "Edit Profile" : "Add Profile"}
+            </h1>
             <FormControl fullWidth margin="normal">
                 <TextField
                     label="First Name"
