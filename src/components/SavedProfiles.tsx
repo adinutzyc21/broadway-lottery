@@ -1,20 +1,27 @@
 import {
-    Box,
+    Button,
+    Container,
     IconButton,
     List,
     ListItem,
     ListItemText,
-    Typography,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import { Edit, Delete, ArrowBack } from "@mui/icons-material";
 import { useContext, useEffect } from "react";
 import { ProfilesContext } from "../utils/ProfilesContext";
 import { Profile } from "./MainApp";
-import { scrollToId } from "../utils/utils";
 
 export const SavedProfiles: React.FC = () => {
-    const { profiles, setProfiles, setNotification, setEditingIndex } =
-        useContext(ProfilesContext);
+    const {
+        profiles,
+        setProfiles,
+        setNotification,
+        setEditingIndex,
+        showSavedProfiles,
+        setShowLotteryList,
+        setShowProfileForm,
+        setShowSavedProfiles,
+    } = useContext(ProfilesContext);
 
     useEffect(() => {
         loadProfiles();
@@ -29,7 +36,9 @@ export const SavedProfiles: React.FC = () => {
     };
 
     const handleEditProfile = (index: number) => {
-        scrollToId("profileForm");
+        setShowLotteryList(false);
+        setShowSavedProfiles(false);
+        setShowProfileForm(true);
 
         setEditingIndex(index);
     };
@@ -42,9 +51,39 @@ export const SavedProfiles: React.FC = () => {
         });
     };
 
+    if (!showSavedProfiles) {
+        return <></>;
+    }
+    const handleBackToLotteriesClick = (): void => {
+        setShowLotteryList(true);
+        setShowSavedProfiles(false);
+        setShowProfileForm(false);
+    };
+
+    const handleAddProfileClick = (): void => {
+        setShowLotteryList(false);
+        setShowSavedProfiles(false);
+        setShowProfileForm(true);
+    };
+
     return (
-        <Box sx={{ p: 4 }}>
-            <h1 id="savedProfiles">Saved Profiles</h1>
+        <Container>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                }}
+            >
+                <IconButton
+                    color="primary"
+                    aria-label="Back to Lotteries"
+                    onClick={handleBackToLotteriesClick}
+                >
+                    <ArrowBack />
+                </IconButton>
+                <h1 id="savedProfiles">Saved Profiles</h1>
+            </div>
+
             <List>
                 {profiles.map((profile: Profile, index: number) => (
                     <ListItem key={index}>
@@ -60,6 +99,14 @@ export const SavedProfiles: React.FC = () => {
                     </ListItem>
                 ))}
             </List>
-        </Box>
+
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleAddProfileClick}
+            >
+                Add Profile
+            </Button>
+        </Container>
     );
 };

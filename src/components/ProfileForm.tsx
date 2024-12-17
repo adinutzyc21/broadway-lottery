@@ -1,25 +1,19 @@
+import { useState, useEffect, ChangeEvent, useContext } from "react";
 import {
-    useState,
-    useEffect,
-    ChangeEvent,
-    useContext,
-    ReactElement,
-} from "react";
-import {
-    Box,
-    Typography,
     Button,
     TextField,
     Select,
     MenuItem,
     InputLabel,
     FormControl,
+    Container,
+    IconButton,
 } from "@mui/material";
 import { ProfilesContext, initialProfile } from "../utils/ProfilesContext";
 import { Profile } from "./MainApp";
-import { scrollToId } from "../utils/utils";
+import { ArrowBack } from "@mui/icons-material";
 
-export function ProfileForm(): ReactElement {
+export const ProfileForm: React.FC = () => {
     const {
         profiles,
         setProfiles,
@@ -27,6 +21,10 @@ export function ProfileForm(): ReactElement {
         editingIndex,
         setNotification,
         setError,
+        showProfileForm,
+        setShowLotteryList,
+        setShowProfileForm,
+        setShowSavedProfiles,
     } = useContext(ProfilesContext);
 
     const [formData, setFormData] = useState<Profile>(initialProfile);
@@ -62,10 +60,8 @@ export function ProfileForm(): ReactElement {
                 showNotification("Profile Saved");
             });
 
-            // clear the form
-            setFormData(initialProfile);
-
-            scrollToId("savedProfiles");
+            // show the saved profiles
+            handleBackToSavedProfilesClick();
         }
     };
 
@@ -87,11 +83,39 @@ export function ProfileForm(): ReactElement {
         return true;
     };
 
+    const handleBackToSavedProfilesClick = (): void => {
+        // clear the form
+        setFormData(initialProfile);
+
+        setShowLotteryList(false);
+        setShowSavedProfiles(true);
+        setShowProfileForm(false);
+    };
+
+    if (!showProfileForm) {
+        return <></>;
+    }
+
     return (
-        <Box sx={{ p: 4 }}>
-            <h1 id="profileForm">
-                {editingIndex >= 0 ? "Edit Profile" : "Add Profile"}
-            </h1>
+        <Container>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                }}
+            >
+                <IconButton
+                    color="primary"
+                    aria-label="Back to Lotteries"
+                    onClick={handleBackToSavedProfilesClick}
+                >
+                    <ArrowBack />
+                </IconButton>{" "}
+                <h1 id="profileForm">
+                    {editingIndex >= 0 ? "Edit Profile" : "Add Profile"}
+                </h1>
+            </div>
+
             <FormControl fullWidth margin="normal">
                 <TextField
                     label="First Name"
@@ -135,6 +159,6 @@ export function ProfileForm(): ReactElement {
             >
                 {editingIndex >= 0 ? "Update Profile" : "Save Profile"}
             </Button>
-        </Box>
+        </Container>
     );
-}
+};
