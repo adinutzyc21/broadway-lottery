@@ -6,7 +6,14 @@ import {
     ListItem,
     ListItemText,
 } from "@mui/material";
-import { Edit, Delete, ArrowBack } from "@mui/icons-material";
+import {
+    Edit,
+    Clear,
+    ArrowBack,
+    StarBorder,
+    Star,
+    Add,
+} from "@mui/icons-material";
 import { useContext, useEffect } from "react";
 import { ProfilesContext } from "../utils/ProfilesContext";
 import { Profile } from "./MainApp";
@@ -21,6 +28,8 @@ export const SavedProfiles: React.FC = () => {
         setShowLotteryList,
         setShowProfileForm,
         setShowSavedProfiles,
+        mainProfileIndex,
+        setMainProfileIndex,
     } = useContext(ProfilesContext);
 
     useEffect(() => {
@@ -31,6 +40,12 @@ export const SavedProfiles: React.FC = () => {
         chrome.storage.sync.get("profiles", (storage) => {
             if (storage.profiles) {
                 setProfiles(storage.profiles);
+            }
+        });
+
+        chrome.storage.sync.get("mainProfileIndex", (storage) => {
+            if (storage.mainProfileIndex) {
+                setMainProfileIndex(storage.mainProfileIndex || 0);
             }
         });
     };
@@ -50,10 +65,6 @@ export const SavedProfiles: React.FC = () => {
             setNotification("Profile Deleted");
         });
     };
-
-    if (!showSavedProfiles) {
-        return <></>;
-    }
     const handleBackToLotteriesClick = (): void => {
         setShowLotteryList(true);
         setShowSavedProfiles(false);
@@ -65,6 +76,18 @@ export const SavedProfiles: React.FC = () => {
         setShowSavedProfiles(false);
         setShowProfileForm(true);
     };
+
+    const handleUpdateMainProfileClick = (index: number): void => {
+        setMainProfileIndex(index);
+
+        chrome.storage.sync.set({ mainProfileIndex: index }, () => {
+            setNotification("Main Profile Updated");
+        });
+    };
+
+    if (!showSavedProfiles) {
+        return <></>;
+    }
 
     return (
         <Container>
@@ -87,14 +110,24 @@ export const SavedProfiles: React.FC = () => {
             <List>
                 {profiles.map((profile: Profile, index: number) => (
                     <ListItem key={index}>
+                        <IconButton
+                            onClick={() => handleUpdateMainProfileClick(index)}
+                        >
+                            {index === mainProfileIndex ? (
+                                <Star color="secondary" />
+                            ) : (
+                                <StarBorder />
+                            )}
+                        </IconButton>
                         <ListItemText
                             primary={`${profile.firstName} ${profile.lastName}`}
+                            onClick={() => handleUpdateMainProfileClick(index)}
                         />
                         <IconButton onClick={() => handleEditProfile(index)}>
-                            <Edit />
+                            <Edit color="info" />
                         </IconButton>
                         <IconButton onClick={() => handleDeleteProfile(index)}>
-                            <Delete />
+                            <Clear color="error" />
                         </IconButton>
                     </ListItem>
                 ))}
@@ -104,6 +137,7 @@ export const SavedProfiles: React.FC = () => {
                 variant="contained"
                 color="secondary"
                 onClick={handleAddProfileClick}
+                startIcon={<Add />}
             >
                 Add Profile
             </Button>

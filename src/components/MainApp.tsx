@@ -10,9 +10,7 @@ export interface Profile {
     lastName: string;
     email: string;
     ticketQty: string;
-    month: string;
-    day: string;
-    year: string;
+    birthDate: Date | null;
     zip: string;
     country: string;
 }
@@ -26,6 +24,8 @@ const MainApp: React.FC = () => {
     const [showSavedProfiles, setShowSavedProfiles] = useState<boolean>(false);
     const [showProfileForm, setShowProfileForm] = useState<boolean>(false);
     const [showLotteryList, setShowLotteryList] = useState<boolean>(false);
+
+    const [mainProfileIndex, setMainProfileIndex] = useState<number>(0);
 
     const value = {
         profiles,
@@ -42,6 +42,8 @@ const MainApp: React.FC = () => {
         setShowProfileForm,
         showLotteryList,
         setShowLotteryList,
+        mainProfileIndex,
+        setMainProfileIndex,
     };
 
     useEffect(() => {

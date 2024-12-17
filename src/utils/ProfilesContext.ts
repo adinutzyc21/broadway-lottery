@@ -6,9 +6,7 @@ export const initialProfile = {
     lastName: "",
     email: "",
     ticketQty: "",
-    month: "",
-    day: "",
-    year: "",
+    birthDate: null,
     zip: "",
     country: "",
 };
@@ -28,4 +26,6 @@ export const ProfilesContext = createContext({
     setShowProfileForm: (_: boolean) => {},
     showLotteryList: false,
     setShowLotteryList: (_: boolean) => {},
+    mainProfileIndex: 0,
+    setMainProfileIndex: (_: number) => {},
 });

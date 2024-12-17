@@ -57,17 +57,12 @@ export const ProfileForm: React.FC = () => {
             }
             setProfiles(updatedProfiles);
             chrome.storage.sync.set({ profiles: updatedProfiles }, () => {
-                showNotification("Profile Saved");
+                setNotification("Profile Saved");
             });
 
             // show the saved profiles
             handleBackToSavedProfilesClick();
         }
-    };
-
-    const showNotification = (message: string) => {
-        setNotification(message);
-        setTimeout(() => setNotification(""), 2000);
     };
 
     const formValidation = (): boolean => {
