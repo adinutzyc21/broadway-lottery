@@ -22,4 +22,10 @@ export const ProfilesContext = createContext({
     setNotification: (_: string) => {},
     error: "",
     setError: (_: string) => {},
+    showSavedProfiles: false,
+    setShowSavedProfiles: (_: boolean) => {},
+    showProfileForm: false,
+    setShowProfileForm: (_: boolean) => {},
+    showLotteryList: false,
+    setShowLotteryList: (_: boolean) => {},
 });

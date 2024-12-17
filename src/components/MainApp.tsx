@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import {
-    Box,
-    Typography,
-    Alert,
-    IconButton,
-    Tooltip,
-    Snackbar,
-} from "@mui/material";
-import { HelpOutline } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { Box, Alert, Snackbar } from "@mui/material";
 import { ProfileForm } from "./ProfileForm";
 import { SavedProfiles } from "./SavedProfiles";
 import { ProfilesContext } from "../utils/ProfilesContext";
@@ -26,19 +18,14 @@ export interface Profile {
 }
 
 const MainApp: React.FC = () => {
-    // const instructions =
-    //     "NOTE: For first time users, click 'Edit Profile' to set up a profile. \
-    //     To begin, simply check the Broadway Shows you wish to enter the lottery for \
-    //     and hit the 'Open Selected' button.  The selected shows will open in new tabs. \
-    //     If there is a lottery to enter for that specific show, then the form will be autofilled. \
-    //     To submit the lottery, visit each tab with an available drawing and submit the form. \
-    //     Make sure you complete the captcha before submitting. \
-    //     Good luck!";
-
     const [profiles, setProfiles] = useState<Profile[]>([]);
     const [editingIndex, setEditingIndex] = useState<number>(-1);
     const [notification, setNotification] = useState<string>("");
     const [error, setError] = useState<string>("");
+
+    const [showSavedProfiles, setShowSavedProfiles] = useState<boolean>(false);
+    const [showProfileForm, setShowProfileForm] = useState<boolean>(false);
+    const [showLotteryList, setShowLotteryList] = useState<boolean>(false);
 
     const value = {
         profiles,
@@ -49,22 +36,32 @@ const MainApp: React.FC = () => {
         setNotification,
         error,
         setError,
+        showSavedProfiles,
+        setShowSavedProfiles,
+        showProfileForm,
+        setShowProfileForm,
+        showLotteryList,
+        setShowLotteryList,
     };
 
+    useEffect(() => {
+        if (profiles.length) {
+            setShowLotteryList(true);
+            setShowProfileForm(false);
+            setShowSavedProfiles(false);
+        } else {
+            setShowProfileForm(true);
+            setShowLotteryList(false);
+            setShowSavedProfiles(false);
+        }
+    }, [profiles.length === 0]);
+
     return (
-        <Box sx={{ p: 4 }}>
-            {/* <Typography variant="h4">
-                Broadway Lottery
-                <Tooltip title={instructions}>
-                    <IconButton>
-                        <HelpOutline />
-                    </IconButton>
-                </Tooltip>
-            </Typography> */}
+        <Box>
             <ProfilesContext.Provider value={value}>
                 <BroadwayLottery />
-                <ProfileForm />
                 <SavedProfiles />
+                <ProfileForm />
             </ProfilesContext.Provider>
 
             <Snackbar
