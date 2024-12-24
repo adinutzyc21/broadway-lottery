@@ -191,7 +191,7 @@ export const BroadwayLottery: React.FC = () => {
                         </ListItemAvatar>
                         <ListItemText
                             primary={lottery.name}
-                            secondary={lottery?.theater || lottery?.price}
+                            secondary={lottery.price}
                         />
                     </ListItem>
                 ))}

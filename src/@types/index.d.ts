@@ -3,8 +3,7 @@ interface LotteryType {
     name: string;
     url: string;
     img: string;
-    price?: string;
-    theater?: string;
+    price: string;
 }
 
 export interface Profile {
