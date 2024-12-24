@@ -5,6 +5,14 @@ Chrome extension that signs you up for all Broadway Lotteries.
 
 Inspired by peterzhen/BroadwayLottery which hasn't been updated in 2 years. Plan is to support more than just BroadwayDirect.
 
+## Improvements over the original repo
+
+- This repo uses React and MUI which is more maintainable.
+- The extension opens a new tab in the background to https://lottery.broadwaydirect.com/ and gets a list of active lotteries from there instead of hardcoding them. Then it closes the tab.
+- This extension adds a query parameter which means that it won't affect people just navigating to the sites.
+- This extension supports multiple profiles and alllows the user to swich the favorite profile to use. You can apply with more than one profile then.
+- Both the lotteries and the profiles are stored in Chrome storage.
+
 ## Use The Extension
 1. Clone the repo and cd into the directory
 2. Install and build the extension (this might take a while):
