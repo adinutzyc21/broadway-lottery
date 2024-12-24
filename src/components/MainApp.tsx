@@ -4,16 +4,7 @@ import { ProfileForm } from "./ProfileForm";
 import { SavedProfiles } from "./SavedProfiles";
 import { ProfilesContext } from "../utils/ProfilesContext";
 import { BroadwayLottery } from "./BroadwayLottery";
-
-export interface Profile {
-    firstName: string;
-    lastName: string;
-    email: string;
-    ticketQty: string;
-    birthDate: Date | null;
-    zip: string;
-    country: string;
-}
+import { LotteryType, Profile } from "../@types";
 
 const MainApp: React.FC = () => {
     const [profiles, setProfiles] = useState<Profile[]>([]);

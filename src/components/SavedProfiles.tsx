@@ -16,7 +16,7 @@ import {
 } from "@mui/icons-material";
 import { useContext, useEffect } from "react";
 import { ProfilesContext } from "../utils/ProfilesContext";
-import { Profile } from "./MainApp";
+import { Profile } from "../@types";
 
 export const SavedProfiles: React.FC = () => {
     const {

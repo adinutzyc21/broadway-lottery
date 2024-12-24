@@ -1,12 +1,12 @@
 import { createContext } from "react";
-import { Profile } from "../components/MainApp";
+import { LotteryType, Profile } from "../@types";
 
 export const initialProfile = {
     firstName: "",
     lastName: "",
     email: "",
     ticketQty: "",
-    birthDate: null,
+    birthDate: "",
     zip: "",
     country: "",
 };
