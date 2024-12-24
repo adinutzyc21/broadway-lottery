@@ -18,6 +18,8 @@ const MainApp: React.FC = () => {
 
     const [mainProfileIndex, setMainProfileIndex] = useState<number>(0);
 
+    const [lotteryList, setLotteryList] = useState<LotteryType[]>([]);
+
     const value = {
         profiles,
         setProfiles,
@@ -35,6 +37,8 @@ const MainApp: React.FC = () => {
         setShowLotteryList,
         mainProfileIndex,
         setMainProfileIndex,
+        lotteryList,
+        setLotteryList,
     };
 
     useEffect(() => {

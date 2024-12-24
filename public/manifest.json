@@ -10,9 +10,12 @@
     },
     "content_scripts": [
       {
-        "matches": ["*://lottery.broadwaydirect.com/*?bwayExt=true"],
-        "js": ["broadwayDirectContent.js"],
-        "all_frames": true
+        "matches": ["*://lottery.broadwaydirect.com/show/*"],
+        "js": ["broadwayDirectContent.js"]
+      },
+      {
+        "matches": ["*://lottery.broadwaydirect.com/"],
+        "js": ["getBroadwayLotteries.js"]
       }
     ],
     "permissions": [

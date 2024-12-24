@@ -8,13 +8,15 @@ import {
     ListItemAvatar,
     Avatar,
     ListItemText,
-    ListItemSecondaryAction,
+    ButtonGroup,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { LOTTERY_LIST } from "../utils/constants";
 import { ProfilesContext } from "../utils/ProfilesContext";
 import { Circle } from "@mui/icons-material";
+import { LotteryType } from "../@types";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import Person2Icon from "@mui/icons-material/Person2";
 
 export const BroadwayLottery: React.FC = () => {
     const {
@@ -22,14 +24,52 @@ export const BroadwayLottery: React.FC = () => {
         setShowLotteryList,
         setShowSavedProfiles,
         setShowProfileForm,
+        lotteryList,
+        setLotteryList,
     } = useContext(ProfilesContext);
 
     const [selectedShows, setSelectedShows] = useState<number[]>([]);
     const [allSelected, setAllSelected] = useState<boolean>(false);
+    const [tabId, setTabId] = useState<number>();
 
     useEffect(() => {
-        setAllSelected(selectedShows.length === LOTTERY_LIST.length);
+        loadLotteryList();
+    }, []);
+
+    useEffect(() => {
+        setAllSelected(
+            lotteryList.length !== 0 &&
+                selectedShows.length === lotteryList.length
+        );
     }, [selectedShows]);
+
+    const handleGetLotteries = () => {
+        chrome.tabs.create(
+            {
+                url: "https://lottery.broadwaydirect.com/",
+                active: false,
+            },
+            (myTab) => {
+                setTabId(myTab.id);
+            }
+        );
+    };
+
+    chrome.tabs.onRemoved.addListener(function (closedTabId, removed) {
+        if (closedTabId === tabId) {
+            loadLotteryList();
+        }
+    });
+
+    const loadLotteryList = () => {
+        chrome.storage.sync.get("lotteries", (storage) => {
+            if (storage.lotteries) {
+                setLotteryList(storage.lotteries);
+            } else {
+                handleGetLotteries();
+            }
+        });
+    };
 
     // Toggle selection for a single show
     const handleCheckboxChange = (id: number): void => {
@@ -44,43 +84,20 @@ export const BroadwayLottery: React.FC = () => {
         if (allSelected) {
             setSelectedShows([]);
         } else {
-            setSelectedShows(LOTTERY_LIST.map((show) => show.id));
+            setSelectedShows(lotteryList.map((show) => show.id));
         }
     };
 
     const handleOpenSelected = (): void => {
-        LOTTERY_LIST.filter((show) => selectedShows.includes(show.id)).forEach(
-            (show) => {
+        lotteryList
+            .filter((show) => selectedShows.includes(show.id))
+            .forEach((show) => {
                 chrome.tabs.create({
                     url: `${show.url}?bwayExt=true`,
                     active: false,
                 });
-            }
-        );
+            });
     };
-
-    const buttonRow = (
-        <div style={{ marginTop: "20px", textAlign: "center" }}>
-            <Button
-                variant="contained"
-                color={!allSelected ? "success" : "warning"}
-                startIcon={!allSelected ? <CheckCircleIcon /> : <Circle />}
-                onClick={handleSelectAll}
-                style={{ marginRight: "10px", width: "165px" }}
-            >
-                {!allSelected ? "Select All" : "Unselect All"}
-            </Button>
-            <Button
-                variant="contained"
-                color="primary"
-                startIcon={<OpenInNewIcon />}
-                onClick={handleOpenSelected}
-                disabled={selectedShows.length === 0}
-            >
-                Open Selected
-            </Button>
-        </div>
-    );
 
     const handleSeeProfilesClick = (): void => {
         setShowLotteryList(false);
@@ -88,50 +105,98 @@ export const BroadwayLottery: React.FC = () => {
         setShowProfileForm(false);
     };
 
+    const buttonRow = lotteryList.length ? (
+        <ButtonGroup
+            variant="outlined"
+            aria-label="Lottery Actions Group"
+            fullWidth
+            size="small"
+        >
+            <Button
+                color={!allSelected ? "success" : "warning"}
+                startIcon={!allSelected ? <CheckCircleIcon /> : <Circle />}
+                onClick={handleSelectAll}
+            >
+                {!allSelected ? "Select All" : "Unselect All"}
+            </Button>
+            <Button
+                color="primary"
+                startIcon={<OpenInNewIcon />}
+                onClick={handleOpenSelected}
+                disabled={selectedShows.length === 0}
+                variant="contained"
+            >
+                Open Selected
+            </Button>
+        </ButtonGroup>
+    ) : (
+        <></>
+    );
+
+    const menuRow = (
+        <ButtonGroup
+            variant="text"
+            aria-label="Lottery Actions Group"
+            size="small"
+            orientation="vertical"
+            sx={{ marginBottom: "20px", float: "right", border: "1px black" }}
+        >
+            <Button
+                color="secondary"
+                startIcon={<Person2Icon />}
+                onClick={handleSeeProfilesClick}
+                sx={{ justifyContent: "flex-start" }}
+            >
+                Edit Profiles
+            </Button>
+
+            <Button
+                color="success"
+                startIcon={<RefreshIcon />}
+                onClick={handleGetLotteries}
+                sx={{ justifyContent: "flex-start" }}
+            >
+                Refresh Lotteries
+            </Button>
+        </ButtonGroup>
+    );
+
     if (!showLotteryList) {
         return <></>;
     }
 
     return (
         <Container>
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                }}
-            >
-                <h1 id="lotteries">Broadway Direct Lotteries</h1>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleSeeProfilesClick}
-                    style={{ marginLeft: "auto" }}
-                >
-                    See Profiles
-                </Button>
-            </div>
+            {menuRow}
+            <h1 id="lotteryList" style={{ width: "100%" }}>
+                Broadway Lotteries
+            </h1>
             {buttonRow}
             <List>
-                {LOTTERY_LIST.map((show) => (
-                    <ListItem key={show.id} divider>
+                {lotteryList.map((lottery: LotteryType) => (
+                    <ListItem
+                        key={lottery.id}
+                        divider
+                        secondaryAction={
+                            <Checkbox
+                                checked={selectedShows.includes(lottery.id)}
+                                onChange={() =>
+                                    handleCheckboxChange(lottery.id)
+                                }
+                            />
+                        }
+                    >
                         <ListItemAvatar>
-                            <Avatar alt={show.name} src={show.img} />
+                            <Avatar alt={lottery.name} src={lottery.img} />
                         </ListItemAvatar>
                         <ListItemText
-                            primary={show.name}
-                            secondary={show.theater}
+                            primary={lottery.name}
+                            secondary={lottery?.theater || lottery?.price}
                         />
-                        <ListItemSecondaryAction>
-                            <Checkbox
-                                checked={selectedShows.includes(show.id)}
-                                onChange={() => handleCheckboxChange(show.id)}
-                            />
-                        </ListItemSecondaryAction>
                     </ListItem>
                 ))}
             </List>
-            {buttonRow}
+            {lotteryList.length > 7 && buttonRow}
         </Container>
     );
 };

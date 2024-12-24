@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { LotteryType, Profile } from "../@types";
+import { LOTTERY_LIST } from "./constants";
 
 export const initialProfile = {
     firstName: "",
@@ -28,4 +29,6 @@ export const ProfilesContext = createContext({
     setShowLotteryList: (_: boolean) => {},
     mainProfileIndex: 0,
     setMainProfileIndex: (_: number) => {},
+    lotteryList: LOTTERY_LIST as LotteryType[],
+    setLotteryList: (_: LotteryType[]) => {},
 });
