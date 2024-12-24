@@ -10,11 +10,11 @@
     },
     "content_scripts": [
       {
-        "matches": ["*://lottery.broadwaydirect.com/show/*"],
+        "matches": ["*://lottery.broadwaydirect.com/show/*?bwayExt=true"],
         "js": ["broadwayDirectContent.js"]
       },
       {
-        "matches": ["*://lottery.broadwaydirect.com/"],
+        "matches": ["*://lottery.broadwaydirect.com/?bwayExt=true"],
         "js": ["getBroadwayLotteries.js"]
       }
     ],
@@ -24,7 +24,7 @@
       "storage"
     ],
     "host_permissions": [
-      "*://lottery.broadwaydirect.com/*"
+      "*://lottery.broadwaydirect.com/*?bwayExt=true"
     ]
   }
   

@@ -46,7 +46,7 @@ export const BroadwayLottery: React.FC = () => {
     const handleGetLotteries = () => {
         chrome.tabs.create(
             {
-                url: "https://lottery.broadwaydirect.com/",
+                url: "https://lottery.broadwaydirect.com/?bwayExt=true",
                 active: false,
             },
             (myTab) => {
