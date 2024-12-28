@@ -2,10 +2,7 @@ import { useState, useEffect, ChangeEvent, useContext } from "react";
 import {
     Button,
     TextField,
-    Select,
     MenuItem,
-    InputLabel,
-    FormControl,
     Container,
     IconButton,
     SelectChangeEvent,
@@ -138,82 +135,78 @@ export const ProfileForm: React.FC = () => {
                     gap: "10px",
                 }}
             >
-                <FormControl
-                    sx={{ width: "49%", padding: "10px 0px 10px 0px" }}
-                >
-                    <TextField
-                        variant="standard"
-                        label="First Name"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        fullWidth
-                    />
-                </FormControl>
-                <FormControl
-                    sx={{ width: "49%", padding: "10px 0px 10px 0px" }}
-                >
-                    <TextField
-                        variant="standard"
-                        label="Last Name"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        fullWidth
-                    />
-                </FormControl>
+                <TextField
+                    variant="standard"
+                    label="First Name"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                />
+                <TextField
+                    variant="standard"
+                    label="Last Name"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                />
 
-                <FormControl
-                    sx={{ width: "100%", padding: "10px 0px 10px 0px" }}
-                >
-                    <TextField
-                        variant="standard"
-                        label="Email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        fullWidth
-                    />
-                </FormControl>
+                <TextField
+                    variant="standard"
+                    label="Email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                />
 
-                <FormControl>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Birth Date"
-                            slotProps={{
-                                popper: { placement: "right-end" },
-                                textField: { variant: "standard" },
-                            }}
-                            onChange={handleBirthdateChange}
-                            maxDate={dayjs().subtract(10, "years")}
-                        />
-                    </LocalizationProvider>
-                </FormControl>
-                <FormControl
-                    sx={{ width: "200px", padding: "10px 0px 10px 0px" }}
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Birth Date"
+                        slotProps={{
+                            popper: { placement: "right-end" },
+                            textField: { variant: "standard" },
+                        }}
+                        onChange={handleBirthdateChange}
+                        maxDate={dayjs().subtract(10, "years")}
+                        value={dayjs(formData.birthDate)}
+                    />
+                </LocalizationProvider>
+
+                <TextField
+                    variant="standard"
+                    label="Ticket Quantity"
+                    name="ticketQty"
+                    value={formData.ticketQty}
+                    onChange={handleInputChange}
+                    select
                 >
-                    <InputLabel id="ticketQty">Ticket Quantity</InputLabel>
-                    <Select
-                        name="ticketQty"
-                        value={formData.ticketQty}
-                        onChange={handleSelectTicketQuantity}
-                        variant="standard"
-                        labelId="ticketQty"
-                        label="Ticket Quantity"
-                    >
-                        <MenuItem value="1">1</MenuItem>
-                        <MenuItem value="2">2</MenuItem>
-                        <MenuItem value="3">3</MenuItem>
-                        <MenuItem value="4">4</MenuItem>
-                    </Select>
-                </FormControl>
+                    <MenuItem value="1">1</MenuItem>
+                    <MenuItem value="2">2</MenuItem>
+                    <MenuItem value="3">3</MenuItem>
+                    <MenuItem value="4">4</MenuItem>
+                </TextField>
+
+                <TextField
+                    variant="standard"
+                    label="Zip Code"
+                    name="zip"
+                    value={formData.zip}
+                    onChange={handleInputChange}
+                />
+
+                <TextField
+                    variant="standard"
+                    label="Country of Residence"
+                    name="country"
+                    value={formData.country}
+                    onChange={handleInputChange}
+                />
             </div>
 
             <Button
                 variant="contained"
                 color="primary"
                 onClick={handleSaveProfile}
-                sx={{ marginTop: "50px" }}
+                sx={{ marginTop: "20px" }}
             >
                 {editingIndex >= 0 ? "Update Profile" : "Save Profile"}
             </Button>
