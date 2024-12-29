@@ -7,6 +7,7 @@ interface LotteryType {
 }
 
 export interface Profile {
+    profileName?: string;
     firstName: string;
     lastName: string;
     email: string;

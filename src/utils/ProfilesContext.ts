@@ -4,6 +4,7 @@ import { LotteryType, Profile } from "../@types";
 type SetStateAction<S> = S | ((prevState: S) => S);
 
 export const initialProfile = {
+    profileName: "",
     firstName: "",
     lastName: "",
     email: "",

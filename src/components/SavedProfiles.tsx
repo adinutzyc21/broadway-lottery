@@ -80,6 +80,7 @@ export const SavedProfiles: React.FC = () => {
     const handleAddProfileClick = (): void => {
         // clear the form
         setFormData(initialProfile);
+        setEditingIndex(-1);
 
         setShowLotteryList(false);
         setShowSavedProfiles(false);
@@ -129,7 +130,10 @@ export const SavedProfiles: React.FC = () => {
                             )}
                         </IconButton>
                         <ListItemText
-                            primary={`${profile.firstName} ${profile.lastName}`}
+                            primary={
+                                profile.profileName ||
+                                `${profile.firstName} ${profile.lastName}`
+                            }
                             onClick={() => handleUpdateMainProfileClick(index)}
                         />
                         <IconButton onClick={() => handleEditProfile(index)}>

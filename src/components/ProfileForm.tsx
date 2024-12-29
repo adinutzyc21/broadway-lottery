@@ -114,7 +114,7 @@ export const ProfileForm: React.FC = () => {
                     alignItems: "center",
                     flexWrap: "wrap",
                     justifyContent: "space-between",
-                    gap: "10px",
+                    rowGap: "30px",
                 }}
             >
                 <TextField
@@ -123,6 +123,7 @@ export const ProfileForm: React.FC = () => {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
+                    sx={{ width: "220px" }}
                 />
                 <TextField
                     variant="standard"
@@ -130,6 +131,7 @@ export const ProfileForm: React.FC = () => {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
+                    sx={{ width: "220px" }}
                 />
 
                 <TextField
@@ -138,6 +140,7 @@ export const ProfileForm: React.FC = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
+                    sx={{ width: "350px" }}
                 />
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -150,6 +153,7 @@ export const ProfileForm: React.FC = () => {
                         onChange={handleBirthdateChange}
                         maxDate={dayjs().subtract(10, "years")}
                         value={dayjs(formData.birthDate)}
+                        sx={{ width: "220px" }}
                     />
                 </LocalizationProvider>
 
@@ -160,6 +164,7 @@ export const ProfileForm: React.FC = () => {
                     value={formData.ticketQty}
                     onChange={handleInputChange}
                     select
+                    sx={{ width: "220px" }}
                 >
                     <MenuItem value="1">1</MenuItem>
                     <MenuItem value="2">2</MenuItem>
@@ -173,6 +178,7 @@ export const ProfileForm: React.FC = () => {
                     name="zip"
                     value={formData.zip}
                     onChange={handleInputChange}
+                    sx={{ width: "220px" }}
                 />
 
                 <TextField
@@ -181,6 +187,16 @@ export const ProfileForm: React.FC = () => {
                     name="country"
                     value={formData.country}
                     onChange={handleInputChange}
+                    sx={{ width: "220px" }}
+                />
+
+                <TextField
+                    variant="standard"
+                    label="Profile Name (not required)"
+                    name="profileName"
+                    value={formData.profileName}
+                    onChange={handleInputChange}
+                    fullWidth
                 />
             </div>
 
@@ -188,7 +204,7 @@ export const ProfileForm: React.FC = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleSaveProfile}
-                sx={{ marginTop: "20px" }}
+                sx={{ marginTop: "50px" }}
             >
                 {editingIndex >= 0 ? "Update Profile" : "Save Profile"}
             </Button>
