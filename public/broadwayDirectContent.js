@@ -13,7 +13,7 @@ const clickOpenShow = () => {
     try {
         const openButtons = document.getElementsByClassName("enter-button");
         if (openButtons.length === 0) {
-            window.close();
+            chrome.runtime.sendMessage({ closeThis: true });
         }
 
         for (let i = 0; i < openButtons.length / 2; i++) {
@@ -25,6 +25,10 @@ const clickOpenShow = () => {
                 setTimeout(() => fillForm(profile), 500);
             }, i * 1000);
         }
+
+        setTimeout(() => {
+            chrome.runtime.sendMessage({ closeThis: true });
+        }, (openButtons.length / 2) * 1510);
     } catch (e) {
         console.log("Error occurred", e);
     }
