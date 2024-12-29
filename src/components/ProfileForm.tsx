@@ -187,8 +187,13 @@ export const ProfileForm: React.FC = () => {
                     name="country"
                     value={formData.country}
                     onChange={handleInputChange}
+                    select
                     sx={{ width: "220px" }}
-                />
+                >
+                    <MenuItem value="USA">USA</MenuItem>
+                    <MenuItem value="CANADA">CANADA</MenuItem>
+                    <MenuItem value="OTHER">OTHER</MenuItem>
+                </TextField>
 
                 <TextField
                     variant="standard"

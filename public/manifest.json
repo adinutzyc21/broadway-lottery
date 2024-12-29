@@ -15,7 +15,7 @@
       },
       {
         "matches": ["*://lottery.broadwaydirect.com/?bwayExt=true"],
-        "js": ["getBroadwayLotteries.js"]
+        "js": ["getBroadwayDirectLotteries.js"]
       }
     ],
     "permissions": [
