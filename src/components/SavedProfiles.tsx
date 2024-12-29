@@ -15,7 +15,7 @@ import {
     Add,
 } from "@mui/icons-material";
 import { useContext, useEffect } from "react";
-import { ProfilesContext } from "../utils/ProfilesContext";
+import { initialProfile, ProfilesContext } from "../utils/ProfilesContext";
 import { Profile } from "../@types";
 
 export const SavedProfiles: React.FC = () => {
@@ -30,6 +30,7 @@ export const SavedProfiles: React.FC = () => {
         setShowSavedProfiles,
         mainProfileIndex,
         setMainProfileIndex,
+        setFormData,
     } = useContext(ProfilesContext);
 
     useEffect(() => {
@@ -56,6 +57,11 @@ export const SavedProfiles: React.FC = () => {
         setShowProfileForm(true);
 
         setEditingIndex(index);
+        setFormData(index === -1 ? initialProfile : profiles[index]);
+
+        if (index !== -1) {
+            setNotification("Profile Loaded");
+        }
     };
 
     const handleDeleteProfile = (index: number) => {
@@ -72,6 +78,9 @@ export const SavedProfiles: React.FC = () => {
     };
 
     const handleAddProfileClick = (): void => {
+        // clear the form
+        setFormData(initialProfile);
+
         setShowLotteryList(false);
         setShowSavedProfiles(false);
         setShowProfileForm(true);

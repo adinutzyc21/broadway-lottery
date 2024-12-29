@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Alert, Snackbar } from "@mui/material";
 import { ProfileForm } from "./ProfileForm";
 import { SavedProfiles } from "./SavedProfiles";
-import { ProfilesContext } from "../utils/ProfilesContext";
+import { initialProfile, ProfilesContext } from "../utils/ProfilesContext";
 import { BroadwayLottery } from "./BroadwayLottery";
 import { LotteryType, Profile } from "../@types";
 
@@ -19,6 +19,7 @@ const MainApp: React.FC = () => {
     const [mainProfileIndex, setMainProfileIndex] = useState<number>(0);
 
     const [lotteryList, setLotteryList] = useState<LotteryType[]>([]);
+    const [formData, setFormData] = useState<Profile>(initialProfile);
 
     const value = {
         profiles,
@@ -39,6 +40,8 @@ const MainApp: React.FC = () => {
         setMainProfileIndex,
         lotteryList,
         setLotteryList,
+        formData,
+        setFormData,
     };
 
     useEffect(() => {

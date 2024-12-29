@@ -1,11 +1,10 @@
-import { useState, useEffect, ChangeEvent, useContext } from "react";
+import { useEffect, ChangeEvent, useContext } from "react";
 import {
     Button,
     TextField,
     MenuItem,
     Container,
     IconButton,
-    SelectChangeEvent,
 } from "@mui/material";
 import { ProfilesContext, initialProfile } from "../utils/ProfilesContext";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -26,29 +25,15 @@ export const ProfileForm: React.FC = () => {
         setShowLotteryList,
         setShowProfileForm,
         setShowSavedProfiles,
+        formData,
+        setFormData,
     } = useContext(ProfilesContext);
-
-    const [formData, setFormData] = useState<Profile>(initialProfile);
-
-    useEffect(() => {
-        setFormData(
-            editingIndex === -1 ? initialProfile : profiles[editingIndex]
-        );
-
-        if (editingIndex !== -1) {
-            setNotification("Profile Loaded");
-        }
-    }, [editingIndex]);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         if (name) {
             setFormData((prev) => ({ ...prev, [name]: value as string }));
         }
-    };
-
-    const handleSelectTicketQuantity = (e: SelectChangeEvent<string>) => {
-        setFormData((prev) => ({ ...prev, ticketQty: e.target.value }));
     };
 
     const handleBirthdateChange = (value: Dayjs | null): void => {
@@ -94,9 +79,6 @@ export const ProfileForm: React.FC = () => {
     };
 
     const handleBackToSavedProfilesClick = (): void => {
-        // clear the form
-        setFormData(initialProfile);
-
         setShowLotteryList(false);
         setShowSavedProfiles(true);
         setShowProfileForm(false);
@@ -120,9 +102,9 @@ export const ProfileForm: React.FC = () => {
                     onClick={handleBackToSavedProfilesClick}
                 >
                     <ArrowBack />
-                </IconButton>{" "}
+                </IconButton>
                 <h1 id="profileForm">
-                    {editingIndex >= 0 ? "Edit Profile" : "Add Profile"}
+                    {editingIndex >= 0 ? " Edit Profile" : " Add Profile"}
                 </h1>
             </div>
 
